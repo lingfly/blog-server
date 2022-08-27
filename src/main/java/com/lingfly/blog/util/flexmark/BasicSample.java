@@ -9,6 +9,7 @@ import com.vladsch.flexmark.parser.ParserEmulationProfile;
 import com.vladsch.flexmark.profile.pegdown.Extensions;
 import com.vladsch.flexmark.profile.pegdown.PegdownOptionsAdapter;
 import com.vladsch.flexmark.util.ast.Node;
+import com.vladsch.flexmark.util.ast.TextCollectingVisitor;
 import com.vladsch.flexmark.util.ast.VisitHandler;
 import com.vladsch.flexmark.util.data.DataHolder;
 import com.vladsch.flexmark.util.data.MutableDataSet;
@@ -94,10 +95,14 @@ public class BasicSample {
 
         String html = renderer.render(document);
 
-        Node node = document;
+        TextCollectingVisitor visitor = new TextCollectingVisitor();
+
+
+        Node node = document.getFirstChild();
         while (node != null) {
             if (node instanceof TableBlock t) {
-                visitHandlers[0].visit(t);
+                String s = visitor.collectAndGetText(node);
+                System.out.println(s);
             }
             node = node.getNext();
         }
