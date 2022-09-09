@@ -16,6 +16,7 @@ public class Article {
     private String title;
     private String description;
     private List<String> tags;
+    private String content;
     private Integer length;
     private String author;
     private Long publish_time;
